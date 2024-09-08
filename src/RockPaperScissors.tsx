@@ -215,7 +215,7 @@ function RockPaperScissors() {
                   You chose: {result.playerChoice}
                 </p>
                 <p style={{ fontSize: "1.5rem", marginBottom: "-10px" }}>
-                  You chose: {result.computerChoice}
+                  Computer chose: {result.computerChoice}
                 </p>
 
                 <div
