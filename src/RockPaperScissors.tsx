@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ConnectButton, TransactionButton, useActiveAccount, useActiveWallet, useDisconnect, useReadContract } from 'thirdweb/react';
 import { client } from './client';
 import { inAppWallet } from 'thirdweb/wallets';
@@ -115,8 +115,8 @@ function RockPaperScissors() {
           <ConnectButton
             client={client}
             accountAbstraction={{
-                chain: sepolia,
-                sponsorGas: true,
+              chain: sepolia,
+              sponsorGas: true,
             }}
             connectModal={{
               title: "Mini Game App",
@@ -126,30 +126,48 @@ function RockPaperScissors() {
           />
         ) : (
           <>
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            height: 'auto',
-            width: '100%',
-            gap: '0.5rem',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            border: '1px solid #f0f0f0',
-            padding: '0.5rem',
-          }}>
-            <div>
-                <p style={{fontSize: '0.5rem', marginBottom: '-10px', marginTop: '-10px'}}>{shortenAddress(account.address)}</p>
-                <p style={{fontSize: '0.75rem', marginBottom: '-10px'}}>Balance: {tokenbalance?.displayValue}</p>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                height: "auto",
+                width: "100%",
+                gap: "0.5rem",
+                alignItems: "center",
+                justifyContent: "space-between",
+                border: "1px solid #f0f0f0",
+                padding: "0.5rem",
+              }}
+            >
+              <div>
+                <p
+                  style={{
+                    fontSize: "0.5rem",
+                    marginBottom: "-10px",
+                    marginTop: "-10px",
+                  }}
+                >
+                  {shortenAddress(account.address)}
+                </p>
+                <p style={{ fontSize: "0.75rem", marginBottom: "-10px" }}>
+                  Balance: {tokenbalance?.displayValue}
+                </p>
+              </div>
+              <button
+                style={{
+                  padding: "0.5rem 1rem",
+                  backgroundColor: "#dc3545",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "0.75rem",
+                }}
+                onClick={() => wallet && disconnect(wallet)}
+              >
+                Logout
+              </button>
             </div>
-            <button style={{padding: '0.5rem 1rem', 
-                backgroundColor: '#dc3545',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.75rem'
-            }} onClick={() => disconnect(wallet)}>Logout</button>
-          </div>
             {!result ? (
               <div>
                 <h3>Choose your options</h3>
@@ -224,52 +242,78 @@ function RockPaperScissors() {
                     Try again
                   </button>
                   {showPrize && !prizeClaimed && (
-                    <button style={{padding: '0.5rem 1rem', backgroundColor: "#ffc107"
-                        , color: "#000000", cursor: "pointer",
+                    <button
+                      style={{
+                        padding: "0.5rem 1rem",
+                        backgroundColor: "#ffc107",
+                        color: "#000000",
+                        cursor: "pointer",
                         border: "none",
-                        borderRadius: "4px"
-                    }} onClick={claimPrice}>Claim price</button>
+                        borderRadius: "4px",
+                      }}
+                      onClick={claimPrice}
+                    >
+                      Claim price
+                    </button>
                   )}
-                  {
-                    showModal && (
-                        <div style={{
-                            position: 'fixed',
-                            top:0,
-                            left:0,
-                            right:0,
-                            bottom:0,
-                            backgroundColor: 'rgba(0,0,0,0.5)',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <div style={{
-                                backgroundColor: '#ffffffff',
-                                padding: '2rem',
-                                borderRadius: '3px',
-                                maxWidth: '300px',
-                                textAlign: 'center'
-                            }}>
-                                <h2 style={{fontSize: '1.2rem', marginBottom: '1rem'}}>Claim 10 tokens!</h2>
-                                <p style={{marginBottom: '1rem'}}>You won and can claim 10 tokens to your wallet.</p>
-                                <TransactionButton transaction={() => claimTo({
-                                    contract: contract,
-                                    to: account.address,
-                                    quantity: "10"
-                                })} onTransactionConfirmed={() => {
-                                    alert('Price claimed!'); setShowmodal(false); setPriceClaimed(true);
-                                }} style={{
-                                    padding: '0.5rem 1rem',
-                                    backgroundColor: '#28a745',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '4px',
-                                    cursor: 'pointer'
-                                }}>Claim prize</TransactionButton>
-                            </div>
-                        </div>
-                    )
-                  }
+                  {showModal && (
+                    <div
+                      style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#ffffffff",
+                          padding: "2rem",
+                          borderRadius: "3px",
+                          maxWidth: "300px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <h2
+                          style={{ fontSize: "1.2rem", marginBottom: "1rem" }}
+                        >
+                          Claim 10 tokens!
+                        </h2>
+                        <p style={{ marginBottom: "1rem" }}>
+                          You won and can claim 10 tokens to your wallet.
+                        </p>
+                        <TransactionButton
+                          transaction={() =>
+                            claimTo({
+                              contract: contract,
+                              to: account.address,
+                              quantity: "10",
+                            })
+                          }
+                          onTransactionConfirmed={() => {
+                            alert("Price claimed!");
+                            setShowmodal(false);
+                            setPriceClaimed(true);
+                          }}
+                          style={{
+                            padding: "0.5rem 1rem",
+                            backgroundColor: "#28a745",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Claim prize
+                        </TransactionButton>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
