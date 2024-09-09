@@ -62,6 +62,7 @@ function RockPaperScissors() {
         setShowprize(false);
         setShowmodal(false);
         setResult(null);
+        setPriceClaimed(false);
     }
 
     const claimPrice = () => {
